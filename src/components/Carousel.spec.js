@@ -15,9 +15,11 @@ describe("Carousel", () => {
   ];
 
   const defaultGlobalInnerWidth = global.innerWidth;
+
   beforeEach(() => {
     global.innerWidth = defaultGlobalInnerWidth;
   });
+
   it("should render", () => {
     const component = shallow(<Carousel items={items} />);
     expect(component.exists()).toBe(true);
@@ -97,34 +99,21 @@ describe("Carousel", () => {
         .last()
         .prop("src")
     ).toEqual("imgsrc5");
-    component.find("button.next").simulate("click");
-    expect(
-      component
-        .find(".carousel-item img")
-        .last()
-        .prop("src")
-    ).toEqual("imgsrc6");
-    component.find("button.next").simulate("click");
-    expect(
-      component
-        .find(".carousel-item img")
-        .last()
-        .prop("src")
-    ).toEqual("imgsrc7");
-    component.find("button.next").simulate("click");
-    expect(
-      component
-        .find(".carousel-item img")
-        .last()
-        .prop("src")
-    ).toEqual("imgsrc1");
-    component.find("button.next").simulate("click");
-    expect(
-      component
-        .find(".carousel-item img")
-        .last()
-        .prop("src")
-    ).toEqual("imgsrc2");
+
+    const clickNextAndExpectLastImageSrcToBe = imgSrcValue => {
+      component.find("button.next").simulate("click");
+      expect(
+        component
+          .find(".carousel-item img")
+          .last()
+          .prop("src")
+      ).toEqual(imgSrcValue);
+    };
+
+    clickNextAndExpectLastImageSrcToBe("imgsrc6");
+    clickNextAndExpectLastImageSrcToBe("imgsrc7");
+    clickNextAndExpectLastImageSrcToBe("imgsrc1");
+    clickNextAndExpectLastImageSrcToBe("imgsrc2");
   });
 
   it("should loop in reverse images when hitting previous", () => {
@@ -136,26 +125,19 @@ describe("Carousel", () => {
         .first()
         .prop("src")
     ).toEqual("imgsrc1");
-    component.find("button.previous").simulate("click");
-    expect(
-      component
-        .find(".carousel-item img")
-        .first()
-        .prop("src")
-    ).toEqual("imgsrc7");
-    component.find("button.previous").simulate("click");
-    expect(
-      component
-        .find(".carousel-item img")
-        .first()
-        .prop("src")
-    ).toEqual("imgsrc6");
-    component.find("button.previous").simulate("click");
-    expect(
-      component
-        .find(".carousel-item img")
-        .first()
-        .prop("src")
-    ).toEqual("imgsrc5");
+
+    const clickPreviousAndExpectLastImageSrcToBe = imgSrcValue => {
+      component.find("button.previous").simulate("click");
+      expect(
+        component
+          .find(".carousel-item img")
+          .first()
+          .prop("src")
+      ).toEqual(imgSrcValue);
+    };
+
+    clickPreviousAndExpectLastImageSrcToBe("imgsrc7");
+    clickPreviousAndExpectLastImageSrcToBe("imgsrc6");
+    clickPreviousAndExpectLastImageSrcToBe("imgsrc5");
   });
 });
