@@ -2,7 +2,8 @@ import React from "react";
 
 export default class Carousel extends React.Component {
   state = {
-    numberOfItemsToShow: 1
+    numberOfItemsToShow: 1,
+    position: 0
   };
 
   handleResize = () => {
@@ -21,18 +22,60 @@ export default class Carousel extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize);
   }
-  renderItem(item) {
+
+  handlePrevious = () => {
+    const currentPosition = this.state.position;
+    const newPosition =
+      currentPosition === 0 ? this.props.items.length - 1 : currentPosition - 1;
+    this.setState({ position: newPosition });
+  };
+
+  handleNext = () => {
+    const currentPosition = this.state.position;
+    const newPosition =
+      currentPosition === this.props.items.length ? 1 : currentPosition + 1;
+    this.setState({ position: newPosition });
+  };
+
+  renderItem(item, isCurrent) {
     return (
-      <li key={item.imgSrc} className={`carousel-item`}>
+      <li
+        key={item.imgSrc}
+        className={`carousel-item${isCurrent ? " current" : ""}`}>
         <img src={item.imgSrc} />
       </li>
     );
   }
   render() {
     const { items } = this.props;
-    const { numberOfItemsToShow } = this.state;
-    const itemsToShow = items.slice(0, numberOfItemsToShow);
-    const content = itemsToShow.map(this.renderItem);
-    return <ul className="carousel">{content}</ul>;
+    const { numberOfItemsToShow, position } = this.state;
+
+    const startIndex = position;
+    const endIndex = position + numberOfItemsToShow;
+    const itemsToShow = [...items, ...items].slice(startIndex, endIndex);
+
+    const currentIndex = Math.ceil(itemsToShow.length / 2);
+
+    const content = itemsToShow.map((item, i) =>
+      this.renderItem(item, i + 1 === currentIndex)
+    );
+
+    return (
+      <>
+        <ul className="carousel">{content}</ul>
+        <ul className="controls">
+          <li>
+            <button className="previous" onClick={this.handlePrevious}>
+              Previous
+            </button>
+          </li>
+          <li>
+            <button className="next" onClick={this.handleNext}>
+              Next
+            </button>
+          </li>
+        </ul>
+      </>
+    );
   }
 }
