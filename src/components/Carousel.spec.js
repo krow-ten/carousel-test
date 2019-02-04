@@ -72,7 +72,7 @@ describe("Carousel", () => {
     expect(component.find(".carousel-item.current img").prop("src")).toEqual(
       "imgsrc1"
     );
-    component.find("button.next").simulate("click");
+    component.find(".next-btn").simulate("click");
     expect(component.find(".carousel-item.current img").prop("src")).toEqual(
       "imgsrc2"
     );
@@ -84,7 +84,7 @@ describe("Carousel", () => {
     expect(component.find(".carousel-item.current img").prop("src")).toEqual(
       "imgsrc3"
     );
-    component.find("button.next").simulate("click");
+    component.find(".next-btn").simulate("click");
     expect(component.find(".carousel-item.current img").prop("src")).toEqual(
       "imgsrc4"
     );
@@ -101,7 +101,7 @@ describe("Carousel", () => {
     ).toEqual("imgsrc5");
 
     const clickNextAndExpectLastImageSrcToBe = imgSrcValue => {
-      component.find("button.next").simulate("click");
+      component.find(".next-btn").simulate("click");
       expect(
         component
           .find(".carousel-item img")
@@ -127,7 +127,7 @@ describe("Carousel", () => {
     ).toEqual("imgsrc1");
 
     const clickPreviousAndExpectLastImageSrcToBe = imgSrcValue => {
-      component.find("button.previous").simulate("click");
+      component.find(".previous-btn").simulate("click");
       expect(
         component
           .find(".carousel-item img")

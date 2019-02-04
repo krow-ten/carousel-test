@@ -61,21 +61,21 @@ export default class Carousel extends React.Component {
     );
 
     return (
-      <>
+      <div>
         <ul className="carousel">{content}</ul>
         <ul className="controls">
-          <li>
-            <button className="previous" onClick={this.handlePrevious}>
+          <li className="previous">
+            <button className="previous-btn" onClick={this.handlePrevious}>
               Previous
             </button>
           </li>
-          <li>
-            <button className="next" onClick={this.handleNext}>
+          <li className="next">
+            <button className="next-btn" onClick={this.handleNext}>
               Next
             </button>
           </li>
         </ul>
-      </>
+      </div>
     );
   }
 }

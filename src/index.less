@@ -1,19 +1,123 @@
+@primary-color: #386592;
+@mobile-breakpoint: 600px;
+
 * {
   box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Ropa Sans", sans-serif;
+  background-color: #ebeee8;
+}
+
+.header {
+  color: @primary-color;
+  font-size: 28px;
+  padding: 10px 35px;
+  padding-bottom: 30px;
+  margin-bottom: 15px;
+}
+
+@media (min-width: @mobile-breakpoint) {
+  .header {
+    font-size: 32px;
+  }
+}
+
+.main-container {
+  background-color: #fff;
+  padding: 30px 0;
 }
 
 .carousel {
   margin: 0;
   padding: 0;
   display: flex;
+  justify-content: center;
   width: 100%;
 
   .carousel-item {
     list-style: none;
     margin: 0 10px;
 
-    &.current {
-      border: 1px solid gray;
+    @media (min-width: @mobile-breakpoint) {
+      &.current img {
+        transform: scale(1.1);
+      }
+    }
+
+    img {
+      min-height: 300px;
+    }
+  }
+}
+
+.controls {
+  .previous,
+  .next {
+    position: fixed;
+    margin-top: -220px;
+    list-style: none;
+    button {
+      color: transparent;
+      font-size: 0;
+      height: 100px;
+      width: 50px;
+      border: none;
+      box-sizing: border-box;
+      background: url(images/arrow.svg) no-repeat 20px;
+      background-size: 26px;
+      background-color: rgba(204, 204, 204, 0.7);
+      border-bottom-left-radius: 100px;
+      border-top-left-radius: 100px;
+      border-right: 0;
+    }
+  }
+  .previous {
+    left: 0;
+    button {
+      transform: rotate(180deg);
+    }
+  }
+  .next {
+    right: 0;
+  }
+}
+
+@media (min-width: @mobile-breakpoint) {
+  .controls {
+    display: flex;
+    justify-content: center;
+    .previous,
+    .next {
+      position: unset;
+      margin-top: unset;
+      margin: 0 15px;
+      button {
+        background: @primary-color;
+        color: #fff;
+        border: none;
+        font-size: 28px;
+        width: unset;
+        height: unset;
+        transform: unset;
+        padding: 15px;
+      }
+    }
+    .previous button {
+      border-right: 0;
+      border-bottom-left-radius: 8px;
+      border-top-left-radius: 8px;
+      border-bottom-right-radius: 0px;
+      border-top-right-radius: 0px;
+    }
+    .next button {
+      border-left: 0;
+      border-bottom-right-radius: 8px;
+      border-top-right-radius: 8px;
+      border-bottom-left-radius: 0px;
+      border-top-left-radius: 0px;
     }
   }
 }
