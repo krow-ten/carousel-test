@@ -5,33 +5,52 @@ import "./index.less";
 
 import Carousel from "./components/Carousel";
 
-const App = () => {
-  return (
-    <div className="app">
-      <section className="header">
-        <h1>Carousel Test</h1>
-      </section>
-      <section className="main-container">
-        <Carousel
-          items={[
-            { imgSrc: "https://picsum.photos/300/?image=0" },
-            { imgSrc: "https://picsum.photos/300/?image=1" },
-            { imgSrc: "https://picsum.photos/300/?image=2" },
-            { imgSrc: "https://picsum.photos/300/?image=3" },
-            { imgSrc: "https://picsum.photos/300/?image=4" },
-            { imgSrc: "https://picsum.photos/300/?image=5" },
-            { imgSrc: "https://picsum.photos/300/?image=6" },
-            { imgSrc: "https://picsum.photos/300/?image=7" },
-            { imgSrc: "https://picsum.photos/300/?image=8" },
-            { imgSrc: "https://picsum.photos/300/?image=9" },
-            { imgSrc: "https://picsum.photos/300/?image=10" },
-            { imgSrc: "https://picsum.photos/300/?image=11" }
-          ]}
-        />
-      </section>
-    </div>
-  );
-};
+const NUMBER_OF_IMAGES_TO_LOAD = 12;
+
+class App extends React.Component {
+  state = {
+    items: null,
+    error: null
+  };
+
+  componentDidMount() {
+    fetch("https://picsum.photos/list")
+      .then(response =>
+        response
+          .json()
+          .then(data => {
+            const items = data
+              .map(image => ({
+                imgSrc: `https://picsum.photos/300/?image=${image.id}`,
+                title: image.filename
+              }))
+              .slice(0, NUMBER_OF_IMAGES_TO_LOAD);
+            this.setState({ items });
+          })
+          .catch(error => this.setState({ error }))
+      )
+      .catch(error => this.setState({ error }));
+  }
+
+  render() {
+    const { items, error } = this.state;
+    return (
+      <div className="app">
+        <section className="header">
+          <h1>Carousel Test</h1>
+        </section>
+        <section className="main-container">
+          {items ? <Carousel items={items} /> : <span>Loading...</span>}
+          {error && (
+            <span className="error">
+              There was a problem fetching list of images
+            </span>
+          )}
+        </section>
+      </div>
+    );
+  }
+}
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
