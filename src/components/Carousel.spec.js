@@ -5,8 +5,8 @@ import { shallow, mount } from "enzyme";
 
 describe("Carousel", () => {
   const items = [
-    { imgSrc: "imgsrc1" },
-    { imgSrc: "imgsrc2" },
+    { imgSrc: "imgsrc1", title: "title1" },
+    { imgSrc: "imgsrc2", title: "title2" },
     { imgSrc: "imgsrc3" },
     { imgSrc: "imgsrc4" },
     { imgSrc: "imgsrc5" },
@@ -30,6 +30,13 @@ describe("Carousel", () => {
     const images = component.find(".carousel-item img");
     expect(images.first().prop("src")).toEqual("imgsrc1");
     expect(images.at(1).prop("src")).toEqual("imgsrc2");
+  });
+
+  it("should show titles of items passed into it", () => {
+    const component = shallow(<Carousel items={items} />);
+    const titles = component.find(".carousel-item .title");
+    expect(titles.first().text()).toEqual("title1");
+    expect(titles.at(1).text()).toEqual("title2");
   });
 
   it("should show only 1 of the items when only one 300px image would fit", () => {

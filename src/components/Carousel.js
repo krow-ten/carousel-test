@@ -43,6 +43,7 @@ export default class Carousel extends React.Component {
         key={item.imgSrc}
         className={`carousel-item${isCurrent ? " current" : ""}`}>
         <img src={item.imgSrc} />
+        <div className="title">{item.title}</div>
       </li>
     );
   }
