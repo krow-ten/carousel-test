@@ -1,5 +1,7 @@
 = Carousel Test =
 
+Using node v10.13.0
+
     npm start
 
 starts up a dev server showing the application on http://localhost:1234/
